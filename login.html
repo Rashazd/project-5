@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto py-8">
+        <form id="userForm" class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+            <div class="mb-4">
+                <label for="firstName" class="block text-gray-700">First Name</label>
+                <input type="text" id="firstName" name="firstName"
+                    class="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-300">
+                <span id="firstNameError" class="text-red-500 text-sm"></span>
+            </div>
+            <div class="mb-4">
+                <label for="lastName" class="block text-gray-700">Last Name</label>
+                <input type="text" id="lastName" name="lastName"
+                    class="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-300">
+                <span id="lastNameError" class="text-red-500 text-sm"></span>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700">Email</label>
+                <input type="email" id="email" name="email"
+                    class="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-300">
+                <span id="emailError" class="text-red-500 text-sm"></span>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700">Password</label>
+                <input type="password" id="password" name="password"
+                    class="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-300">
+                <span id="passwordError" class="text-red-500 text-sm"></span>
+            </div>
+            <div class="mb-4">
+                <label for="address" class="block text-gray-700">Address</label>
+                <textarea id="address" name="address"
+                    class="w-full border rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring focus:border-blue-300"></textarea>
+                <span id="addressError" class="text-red-500 text-sm"></span>
+            </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('userForm');
+        form.addEventListener('submit', function (e) {e.preventDefault();
+            if (validateForm()) {
+        // Perform form submission or any further action here
+        alert('Form submitted successfully!');
+        // You can add code here to send data to the server or perform any action upon successful form submission
+     }
+    });
+    
+    function validateForm() {
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const address = document.getElementById('address').value.trim();
+
+    let valid = true;
+
+    if (firstName === '') {
+        displayError('firstNameError', 'First name cannot be empty');
+        valid = false;
+    } else {
+        hideError('firstNameError');
+    }
+
+    if (lastName === '') {
+        displayError('lastNameError', 'Last name cannot be empty');
+        valid = false;
+    } else {
+        hideError('lastNameError');
+    }
+
+    if (email === '') {
+        displayError('emailError', 'Email cannot be empty');
+        valid = false;
+    } else if (!isValidEmail(email)) {
+        displayError('emailError', 'Invalid email format');
+        valid = false;
+    } else {
+        hideError('emailError');
+    }
+
+    if (password === '') {
+        displayError('passwordError', 'Password cannot be empty');
+        valid = false;
+    } else {
+        hideError('passwordError');
+    }
+
+    if (address === '') {
+        displayError('addressError', 'Address cannot be empty');
+        valid = false;
+    } else {
+        hideError('addressError');
+    }
+
+    return valid;
+}
+
+function displayError(id, errorMessage) {
+    const errorElement = document.getElementById(id);
+    errorElement.textContent = errorMessage;
+}
+
+function hideError(id) {
+    const errorElement = document.getElementById(id);
+    errorElement.textContent = '';
+}
+
+function isValidEmail(email) {
+    // Basic email validation using regular expression
+    const emailRegex = /\S+@\S+\.\S+/;
+    return emailRegex.test(email);
+}
+    </script>
+    
+    
+</body>
+</html>
