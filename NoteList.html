@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Responsive Note List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-semibold mb-4">Note List</h1>
+        <div class="flex flex-col md:flex-row">
+            <div class="md:w-1/3">
+                <form id="addNoteForm" class="mb-4">
+                    <input type="text" id="noteInput" class="w-full border rounded-md px-3 py-2 mb-2 focus:outline-none focus:ring focus:border-blue-300"
+                        placeholder="Enter your note">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add Note</button>
+                </form>
+            </div>
+            <div class="md:w-2/3 md:pl-4">
+                <ul id="noteList" class="bg-white rounded-md shadow-md p-4">
+                    <!-- Notes will be dynamically added here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const addNoteForm = document.getElementById('addNoteForm');
+    const noteInput = document.getElementById('noteInput');
+    const noteList = document.getElementById('noteList');
+
+addNoteForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const noteText = noteInput.value.trim();
+    if (noteText !== '') {
+        addNoteToList(noteText);
+        noteInput.value = '';
+    }
+});
+
+function addNoteToList(noteText) {
+    const li = document.createElement('li');
+    li.className = 'border-b py-2';
+    li.textContent = noteText;
+
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'text-red-500 hover:text-red-700 ml-2';
+    deleteButton.textContent = 'Delete';
+    deleteButton.addEventListener('click', function () {
+        noteList.removeChild(li);
+    });
+
+    li.appendChild(deleteButton);
+    noteList.appendChild(li);
+}
+</script>
+
+</html>
